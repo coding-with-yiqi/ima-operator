@@ -2,6 +2,8 @@
 
 适用于能读取 Skill、执行本机命令并允许受控联网的 Agent。官方包通过 OpenAPI 工作。核查日期：2026-11-06；安装目录依据对应官方文档，当前轮未逐个 Agent 端到端安装。
 
+优先让 Agent 运行 `python3 <技能目录>/scripts/bootstrap.py --apply`，自动复用已有包、保存路径和验收；以下手动步骤仅作排查参考，不要求用户重复操作。详见 [自动接入流程](bootstrap.md)。
+
 ## 1. 选择技能目录
 
 - **Codex**：当前官方用户级目录 `~/.agents/skills/`，项目级为 `.agents/skills/`。已有版本若从其他目录加载，先核对当前技能目录，避免安装同名两份。[官方目录说明](https://developers.openai.com/codex/skills/)
@@ -40,7 +42,7 @@ git clone https://github.com/coding-with-yiqi/ima-operator.git "$IMA_SKILLS_ROOT
 export IMA_OFFICIAL_SKILL_DIR="$IMA_SKILLS_ROOT/ima-skill"
 ```
 
-也可从 [Releases](https://github.com/coding-with-yiqi/ima-operator/releases) 下载 ZIP 解压到对应目录。最终 `ima-skill` 与 `ima-operator` 是两份技能。`export` 只对当前终端生效，桌面 Agent 需在自己的执行环境设置路径，或每次用 `--official-dir` 指定。
+也可从 [Releases](https://github.com/coding-with-yiqi/ima-operator/releases) 下载 ZIP 解压到对应目录。`ima-skill` 与 `ima-operator` 是两份技能。自动流程会发现并保存官方路径，无需 export；手动模式下 `export` 只对当前终端生效，桌面 Agent 可运行一次 bootstrap 登记实际路径。
 
 重新加载技能或新建会话；Codex 可用 `$ima-operator`，Claude Code 可用 `/ima-operator`，OpenClaw 检查当前技能列表。只加载当前任务所需模块。
 

@@ -6,7 +6,19 @@
 
 ## 开始使用
 
-先按你使用的 Agent 安装官方接入，再装本技能：
+把仓库链接交给 Agent，说：
+
+> 安装并配置 ima-operator。先识别当前 Agent，检查已有连接、技能和凭证；复用可用配置，补齐缺项，最后只读验证。需要我扫码或首次提供密钥时，再告诉我。
+
+Agent 读取本技能后，默认运行 [自动接入流程](references/bootstrap.md)：
+
+```bash
+python3 scripts/bootstrap.py --apply
+```
+
+自动发现并复用官方包，缺少才下载和校验，保存实际路径并复用已有凭证。再次执行不重复安装。WorkBuddy 连接器由宿主检查和操作，扫码交给用户；缺少运行时由 Agent 继续补齐，不停在检测报告。
+
+以下指引供 Agent 按需查阅，无需用户先选平台：
 
 - **WorkBuddy**：[安装官方 ima 连接器并授权](references/install-workbuddy.md)。需要笔记创建、追加等操作时，再安装官方 ima Skill；本技能 ZIP 通过“上传技能”导入。
 - **Codex、Claude Code、OpenClaw 等**：[安装官方 ima Skill 与本技能](references/install-other-agents.md)。包含各自目录、下载命令、凭证配置和只读验收。
@@ -23,6 +35,7 @@ Claude Code 可用 `/ima-operator`；其他宿主也可直接用自然语言指�
 ## 操作手册
 
 - [技能入口](SKILL.md)：按需加载的简短操作规则。
+- [自动接入流程](references/bootstrap.md)：识别宿主、复用配置、补齐缺项、授权交接和只读验收。
 - [安装总览](references/setup.md)：WorkBuddy 与其他 Agent 分流，区分官方连接器、官方 Skill 与本技能。
 - [官方 MCP、OpenAPI 与 Computer Use](references/mcp.md)：WorkBuddy 接入、Octop 的 14 个工具与实际能力边界。
 - [20 个主要使用场景](references/scenarios.md)：周报、专栏、资料入库、原位修订、去重、备份与故障续跑。
@@ -49,7 +62,7 @@ python3 scripts/ima_ops.py candidates --snapshot ./receipts/catalog.json --out .
 python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
 
-9 项测试覆盖分页、重复游标、目标匹配、候选误判、散列类型、删除差集、写入边界、业务错误与备份。Computer Use 流程基于 macOS ima 客户端实操；其他平台需要按当前 UI 重新定位。场景手册分别标注“已实测”“官方支持”“待实测”。
+测试覆盖重复安装、宿主识别、配置复用、凭证冲突、安装包完整性，以及分页、查重、删除差集与备份。WorkBuddy 安装分支由宿主工具执行，本仓库的 Python 不访问它的私有登录态。Computer Use 流程基于 macOS ima 客户端实操；其他平台需按当前 UI 定位。
 
 官方 MCP 部分依据腾讯云 [Octop ima 适配器](https://github.com/TencentCloud/Octop/blob/main/src/octop/infra/connectors/gateway/adapters/tencent_ima.py)。本仓库为独立的社区技能，不是腾讯官方 MCP 服务；不分发官方技能源码，不包含凭证或私有业务资料。
 

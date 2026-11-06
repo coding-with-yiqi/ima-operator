@@ -9,8 +9,8 @@ import subprocess
 import sys
 import unicodedata
 from datetime import datetime, timezone
+from ima_config import resolve_official
 
-DEFAULT_OFFICIAL = Path.home() / '.local/share/ima-skills'
 READ = {'wiki/v1/' + x for x in ('search_knowledge_base', 'get_knowledge_base',
     'get_knowledge_list', 'get_addable_knowledge_base_list', 'search_knowledge',
     'get_media_info', 'check_repeated_names')}
@@ -37,7 +37,7 @@ def save(path, data):
     return str(target)
 
 
-def api(endpoint, body, official=DEFAULT_OFFICIAL, write=False):
+def api(endpoint, body, official=None, write=False):
     short = endpoint.removeprefix('openapi/')
     if short not in READ and not (write and short in WRITE):
         raise ValueError('endpoint_not_allowed_or_write_flag_missing')
@@ -49,7 +49,7 @@ def api(endpoint, body, official=DEFAULT_OFFICIAL, write=False):
     for key in ('IMA_CLIENT_ID', 'IMA_API_KEY', 'IMA_OPENAPI_CLIENTID',
                 'IMA_OPENAPI_APIKEY', 'IMA_BASE_URL', 'IMA_SKILL_VERSION', 'IMA_LAST_CHECK_FILE'):
         env.pop(key, None)
-    request = {'helper': str(Path(official).expanduser().resolve() / 'ima_api.cjs'),
+    request = {'helper': str(resolve_official(official) / 'ima_api.cjs'),
                'endpoint': 'openapi/' + short, 'body': body}
     proc = subprocess.run(['node', '-e', NODE], input=json.dumps(request, ensure_ascii=False),
         text=True, encoding='utf-8', capture_output=True, timeout=60, env=env)
@@ -181,7 +181,7 @@ def note_backup(call, note_id):
 
 def main():
     parser = argparse.ArgumentParser(description='ima: save full results locally; print short receipts.')
-    parser.add_argument('--official-dir', default=os.environ.get('IMA_OFFICIAL_SKILL_DIR', str(DEFAULT_OFFICIAL)))
+    parser.add_argument('--official-dir', help='override the automatically discovered official skill path')
     commands = parser.add_subparsers(dest='command', required=True)
     for name, args in {'snapshot': ['name'], 'note': ['id'], 'candidates': ['snapshot'],
                        'audit': ['before', 'after', 'approved'], 'call': ['endpoint', 'request']}.items():
