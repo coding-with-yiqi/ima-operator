@@ -1,0 +1,4 @@
+interface:
+  display_name: "ima 知识库操作"
+  short_description: "优先官方接口、按需使用界面，省 token 完成创建、查重、原位修订和清理"
+  default_prompt: "使用 $ima-operator 处理 ima 资料，优先接口，保持文档唯一，完成后简短回报。"
