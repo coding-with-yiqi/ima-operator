@@ -7,6 +7,7 @@ description: 操作腾讯 ima 笔记和知识库：创建、搜索、查重、�
 
 先查本地个人知识库和已有映射。将目标归入下面一路，只读所需说明；不要默认加载整本手册或 20 个场景。
 
+- 首次接入或缺少官方能力：读 [安装分流](references/setup.md)，区分 WorkBuddy 官方连接器与其他 Agent 的官方 Skill/OpenAPI；已连通则跳过安装。
 - 搜索、读取、创建、追加、上传：[MCP 与接口手册](references/mcp.md)。已安装官方 MCP 时只发现目标工具；未安装则用官方 OpenAPI，无需为此新装服务。
 - 原位修改、迁移、删除、移动目录：[界面操作](references/edit-delete.md)。API 有缺口就继续用已授权客户端处理。
 - 查重、同步：[增量与去重](references/dedup.md)。优先映射和散列，正文只取候选。

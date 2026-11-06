@@ -6,22 +6,25 @@
 
 ## 开始使用
 
-```bash
-git clone https://github.com/coding-with-yiqi/ima-operator.git ~/.codex/skills/ima-operator
-```
+先按你使用的 Agent 安装官方接入，再装本技能：
 
-或从 [Releases](https://github.com/coding-with-yiqi/ima-operator/releases) 下载 ZIP，解压到 Agent 的技能目录。已有同名目录时先核对本地修改，不覆盖自己的配置。
+- **WorkBuddy**：[安装官方 ima 连接器并授权](references/install-workbuddy.md)。需要笔记创建、追加等操作时，再安装官方 ima Skill；本技能 ZIP 通过“上传技能”导入。
+- **Codex、Claude Code、OpenClaw 等**：[安装官方 ima Skill 与本技能](references/install-other-agents.md)。包含各自目录、下载命令、凭证配置和只读验收。
+- **只支持 MCP 的客户端**：见 [接入边界](references/install-other-agents.md#只支持-mcp-的客户端)。目前核实的是 WorkBuddy 官方连接器与 Octop 项目内网关，未核实通用的独立 ima MCP URL。
 
-准备 [环境与官方凭证](references/setup.md)，然后向 Agent 说：
+安装完成后向 Agent 说：
 
 > 使用 $ima-operator 更新这篇 ima 笔记，保持同一文档，不重复上传。
+
+Claude Code 可用 `/ima-operator`；其他宿主也可直接用自然语言指定该技能。下载包在 [Releases](https://github.com/coding-with-yiqi/ima-operator/releases)。
 
 也可说“检查这个知识库的重复文档”或“备份并清理我确认的旧版本”。删除会先准备具体清单，依宿主规则取得执行时确认。
 
 ## 操作手册
 
 - [技能入口](SKILL.md)：按需加载的简短操作规则。
-- [官方 MCP、OpenAPI 与 Computer Use](references/mcp.md)：14 个官方网关工具与实际能力边界。
+- [安装总览](references/setup.md)：WorkBuddy 与其他 Agent 分流，区分官方连接器、官方 Skill 与本技能。
+- [官方 MCP、OpenAPI 与 Computer Use](references/mcp.md)：WorkBuddy 接入、Octop 的 14 个工具与实际能力边界。
 - [20 个主要使用场景](references/scenarios.md)：周报、专栏、资料入库、原位修订、去重、备份与故障续跑。
 - [原位编辑与删除](references/edit-delete.md)：同一 note_id 更新、备份、精确删除和回读。
 - [增量同步与查重](references/dedup.md)：源映射、散列、候选筛选和删除差集。

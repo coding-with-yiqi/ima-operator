@@ -2,7 +2,13 @@
 
 核查日期：2026-11-06。默认走已连接的官方能力；宿主未连接 ima MCP 时，可使用官方 OpenAPI。
 
-## 官方 MCP／网关
+## WorkBuddy 官方 ima 连接器
+
+WorkBuddy 用户先按 [安装指引](install-workbuddy.md) 在客户端连接并扫码授权。官方当前文档支持检索、引用资料和把产物保存回知识库；不将其概括为“只有只读 MCP”，也不把连接授权等同于安装了官方笔记 Skill。[WorkBuddy 官方功能说明](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Knowledge-Base/IMA%20Knowledge%20Base/01-Workbuddy-IMA-Basic-Guide)
+
+其他 Agent 的安装与凭证按 [独立安装指引](install-other-agents.md) 执行，不复制 WorkBuddy 的内部配置或登录态。
+
+## 腾讯官方项目 Octop 的 MCP 网关
 
 腾讯云官方 [Octop 连接器目录](https://github.com/TencentCloud/Octop/blob/main/src/octop/infra/connectors/catalog.json) 将 `tencent-ima` 标为 `gateway`。其 [ima 适配器源码](https://github.com/TencentCloud/Octop/blob/main/src/octop/infra/connectors/gateway/adapters/tencent_ima.py) 暴露以下 14 个工具。这里是官方项目内的网关适配器，尚未核实可直接粘贴到任意客户端的独立 MCP URL。不要编造 `/mcp` 地址；实际工具前缀由宿主决定。
 
@@ -27,6 +33,8 @@
 - `get_media`：媒体原文入口。
 
 工具名已按源码核查，尚未通过 Octop 端到端验收。底层 OpenAPI 的搜索、读写笔记、关联入库已在作者的维护流程实测。该适配器未列出删除、全文替换、建知识库、建知识库文件夹或文件移动工具；这些走 [客户端流程](edit-delete.md)。文件上传由官方 Skill 的 COS 流程补齐。
+
+这 14 个工具属于 Octop 适配器，不能据此推断 WorkBuddy 连接器暴露了相同工具名或安装方式。
 
 ## 官方 OpenAPI／Skill
 
@@ -53,7 +61,7 @@ import_urls                 wiki/v1/import_urls
 写入用本地请求文件，避免把长正文复制到工具调用文本：
 
 ```bash
-python3 ~/.codex/skills/ima-operator/scripts/ima_ops.py call \
+python3 ~/.agents/skills/ima-operator/scripts/ima_ops.py call \
   --endpoint openapi/note/v1/import_doc \
   --request /绝对路径/request.json --out /绝对路径/receipt.json --write
 ```

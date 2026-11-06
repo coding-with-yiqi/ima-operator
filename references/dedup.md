@@ -15,11 +15,11 @@
 ## 命令
 
 ```bash
-python3 ~/.codex/skills/ima-operator/scripts/ima_ops.py snapshot \
+python3 ~/.agents/skills/ima-operator/scripts/ima_ops.py snapshot \
   --name '目标库全名' --out /绝对路径/before.json
-python3 ~/.codex/skills/ima-operator/scripts/ima_ops.py candidates \
+python3 ~/.agents/skills/ima-operator/scripts/ima_ops.py candidates \
   --snapshot /绝对路径/before.json --out /绝对路径/candidates.json
-python3 ~/.codex/skills/ima-operator/scripts/ima_ops.py note \
+python3 ~/.agents/skills/ima-operator/scripts/ima_ops.py note \
   --id '真实note_id' --out /绝对路径/note-backup.json
 ```
 
@@ -28,9 +28,9 @@ python3 ~/.codex/skills/ima-operator/scripts/ima_ops.py note \
 删除授权清单：`{"knowledge_base_id":"真实ID","media_ids":["已批准ID"]}`。JSON 仅记录范围，不产生授权；须有用户对同一清单的执行时确认。
 
 ```bash
-python3 ~/.codex/skills/ima-operator/scripts/ima_ops.py snapshot \
+python3 ~/.agents/skills/ima-operator/scripts/ima_ops.py snapshot \
   --name '目标库全名' --out /绝对路径/after.json
-python3 ~/.codex/skills/ima-operator/scripts/ima_ops.py audit \
+python3 ~/.agents/skills/ima-operator/scripts/ima_ops.py audit \
   --before /绝对路径/before.json --after /绝对路径/after.json \
   --approved /绝对路径/approved.json --out /绝对路径/audit.json
 ```
